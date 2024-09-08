@@ -8,8 +8,8 @@ import java.util.Map;
 import static Lox.TokenType.*; 
 
 class Scanner {
-  private final String source;
-  private final List<Token> tokens = new ArrayList<>();
+  public final String source;
+  public final List<Token> tokens = new ArrayList<>();
 
   private int start = 0;
   private int current = 0;
@@ -71,15 +71,14 @@ class Scanner {
       case ';': addToken(SEMICOLON); break;
       case '*': addToken(STAR); break; 
 
-      case '!':
-      addToken(match('=') ? BANG_EQUAL : BANG);
-      break;
+      
+
+      
+     
     case '=':
       addToken(match('=') ? EQUAL_EQUAL : EQUAL);
       break;
-    case '<':
-      addToken(match('=') ? LESS_EQUAL : LESS);
-      break;
+  
     case '>':
       addToken(match('=') ? GREATER_EQUAL : GREATER);
       break;
@@ -103,9 +102,25 @@ class Scanner {
         line++;
         break;
 
-        case '"': string(); break;
+        case '"': string(); 
+        break;
 
+        case '<':
+        if (match('-')) {
+          addToken(READ);
+        } else {
+          addToken(LESS);
+        }
+        break;
+      case '!':
+        if (match('!')) {
+          addToken(RAND);
+        } else {
+          addToken(BANG);
+        }
+        break;
 
+      
       default:
       if (isDigit(c)) {
         number();

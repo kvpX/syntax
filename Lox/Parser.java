@@ -22,7 +22,9 @@ class Parser {
   }
 
   private Expr expression() {
-    return equality();
+    if (match(TokenType.READ)) return new Expr.Read();
+    if (match(TokenType.RAND)) return new Expr.Rand();
+    return null;
   }
 
   private Expr equality() {
@@ -36,6 +38,7 @@ class Parser {
 
     return expr;
   }
+  
 
   private Expr comparison() {
     Expr expr = term();
@@ -144,7 +147,7 @@ class Parser {
     return new ParseError();
   }
 
-  private void synchronize() {
+  /**private void synchronize() {
     advance();
 
     while (!isAtEnd()) {
@@ -165,7 +168,7 @@ class Parser {
       advance();
     }
   }
-
+**/
  
 
 
